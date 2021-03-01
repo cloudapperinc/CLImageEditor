@@ -668,11 +668,9 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
 - (NSString*)description
 {
     NSString *format = (self.titleFormat) ? self.titleFormat : @"%g : %g";
-    
-    if(self.isLandscape){
+ 
         return [NSString stringWithFormat:format, _longSide, _shortSide];
-    }
-    return [NSString stringWithFormat:format, _shortSide, _longSide];
+   
 }
 
 - (CGFloat)ratio
