@@ -777,6 +777,15 @@ static const CGFloat kMenuBarHeight = 80.0f;
             [self presentViewController:alert animated:YES completion:nil];
         }
         else if(image){
+
+            NSData *data1 = UIImagePNGRepresentation(_originalImage);
+            NSData *data2 = UIImagePNGRepresentation(image);
+            
+            if (![data1 isEqualToData:data2]) {
+                self.navigationItem.rightBarButtonItem.enabled = YES;
+                _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
+            }
+            
             self->_originalImage = image;
             self->_imageView.image = image;
             
@@ -784,10 +793,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
             self.currentTool = nil;
         }
         self.view.userInteractionEnabled = YES;
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-        // TODO for push nav _navigationBar
-        // as we only present it is okey for now
-        _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
+          
+          
     }];
 }
 
