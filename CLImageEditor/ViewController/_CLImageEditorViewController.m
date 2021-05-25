@@ -20,6 +20,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
+@property (nonatomic, assign) BOOL *edited;
+
 @end
 
 
@@ -96,13 +98,14 @@ static const CGFloat kMenuBarHeight = 80.0f;
 - (void)initNavigationBar
 {
     self.navigationItem.rightBarButtonItem = [self createDoneButton];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     if(_navigationBar==nil){
         UINavigationItem *navigationItem  = [[UINavigationItem alloc] init];
         navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
         navigationItem.rightBarButtonItem = [self createDoneButton];
-        
+        navigationItem.rightBarButtonItem.enabled = NO;
         CGFloat dy = MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
         
         UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, dy, self.view.width, kNavBarHeight)];
@@ -781,6 +784,10 @@ static const CGFloat kMenuBarHeight = 80.0f;
             self.currentTool = nil;
         }
         self.view.userInteractionEnabled = YES;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        // TODO for push nav _navigationBar
+        // as we only present it is okey for now
+        _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
     }];
 }
 
