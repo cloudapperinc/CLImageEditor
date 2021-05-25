@@ -21,8 +21,8 @@
 @property (nonatomic, readonly) CLImageEditorTheme *theme;
 @property (nonatomic, readonly) CLImageToolInfo *toolInfo;
 
-- (id)initWithImage:(UIImage*)image;
-- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate;
+- (id)initWithImage:(UIImage*)image blank: (BOOL)blank;
+- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate blank: (BOOL)blank;
 - (id)initWithDelegate:(id<CLImageEditorDelegate>)delegate;
 
 - (void)showInViewController:(UIViewController<CLImageEditorTransitionDelegate>*)controller withImageView:(UIImageView*)imageView;

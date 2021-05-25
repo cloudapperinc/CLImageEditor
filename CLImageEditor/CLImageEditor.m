@@ -21,14 +21,14 @@
     return [_CLImageEditorViewController new];
 }
 
-- (id)initWithImage:(UIImage*)image
+- (id)initWithImage:(UIImage*)image blank: (BOOL)blank;
 {
-    return [self initWithImage:image delegate:nil];
+    return [self initWithImage:image delegate:nil blank:blank];
 }
 
-- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate
+- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate blank: (BOOL)blank;
 {
-    return [[_CLImageEditorViewController alloc] initWithImage:image delegate:delegate];
+    return [[_CLImageEditorViewController alloc] initWithImage:image delegate:delegate blank: (BOOL)blank];
 }
 
 - (id)initWithDelegate:(id<CLImageEditorDelegate>)delegate

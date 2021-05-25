@@ -73,7 +73,7 @@
 - (void)pushedEditBtn
 {
     if(_imageView.image){
-        CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:_imageView.image delegate:self];
+        CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:_imageView.image delegate:self blank: false];
         //CLImageEditor *editor = [[CLImageEditor alloc] initWithDelegate:self];
         
         /*
@@ -127,7 +127,7 @@
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
+    CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image blank: false];
     editor.delegate = self;
     
     [picker pushViewController:editor animated:YES];

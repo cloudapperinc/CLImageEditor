@@ -20,7 +20,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
-@property (nonatomic, assign) BOOL *edited;
+@property (nonatomic, assign) BOOL blank;
 
 @end
 
@@ -52,15 +52,16 @@ static const CGFloat kMenuBarHeight = 80.0f;
 
 - (id)initWithImage:(UIImage *)image
 {
-    return [self initWithImage:image delegate:nil];
+    return [self initWithImage:image delegate:nil blank: false];
 }
 
-- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate
+- (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate blank: (BOOL)blank;
 {
     self = [self init];
     if (self){
         _originalImage = [image deepCopy];
         self.delegate = delegate;
+        self.blank = blank;
     }
     return self;
 }
@@ -98,14 +99,18 @@ static const CGFloat kMenuBarHeight = 80.0f;
 - (void)initNavigationBar
 {
     self.navigationItem.rightBarButtonItem = [self createDoneButton];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    if (self.blank) {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    
+
     if(_navigationBar==nil){
         UINavigationItem *navigationItem  = [[UINavigationItem alloc] init];
         navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
         navigationItem.rightBarButtonItem = [self createDoneButton];
-        navigationItem.rightBarButtonItem.enabled = NO;
+        if (self.blank) {
+            navigationItem.rightBarButtonItem.enabled = NO;
+        }
         CGFloat dy = MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
         
         UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, dy, self.view.width, kNavBarHeight)];
@@ -777,15 +782,17 @@ static const CGFloat kMenuBarHeight = 80.0f;
             [self presentViewController:alert animated:YES completion:nil];
         }
         else if(image){
-
-            NSData *data1 = UIImagePNGRepresentation(_originalImage);
-            NSData *data2 = UIImagePNGRepresentation(image);
             
-            if (![data1 isEqualToData:data2]) {
-                self.navigationItem.rightBarButtonItem.enabled = YES;
-                _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
+            if (self.blank) {
+                NSData *data1 = UIImagePNGRepresentation(_originalImage);
+                NSData *data2 = UIImagePNGRepresentation(image);
+                
+                if (![data1 isEqualToData:data2]) {
+                    self.navigationItem.rightBarButtonItem.enabled = YES;
+                    _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
+                }
             }
-            
+          
             self->_originalImage = image;
             self->_imageView.image = image;
             
