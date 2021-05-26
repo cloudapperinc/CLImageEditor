@@ -93,7 +93,9 @@
     
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, self.width-42, 80)];
     _textView.delegate = self;
-    _textView.backgroundColor = [UIColor clearColor];
+    UIColor *color = [UIColor lightGrayColor];
+    color = [color colorWithAlphaComponent:0.5f];
+    _textView.backgroundColor = color;
     [_scrollView addSubview:_textView];
     
     _colorPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width, 0, self.width, self.height)];
