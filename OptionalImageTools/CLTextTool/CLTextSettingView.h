@@ -17,12 +17,12 @@
 @property (nonatomic, strong) UIColor *selectedBorderColor;
 @property (nonatomic, assign) CGFloat selectedBorderWidth;
 @property (nonatomic, strong) UIFont *selectedFont;
-
-
+ 
 - (void)setTextColor:(UIColor*)textColor;
 - (void)setFontPickerForegroundColor:(UIColor*)foregroundColor;
 - (void)didSelectFont:(UIFont *)font;
 - (void)showSettingMenuWithIndex:(NSInteger)index animated:(BOOL)animated;
+- (UIColor *)colorWithHexString:(NSString *)str_HEX  alpha:(CGFloat)alpha_range;
 
 @end
 
@@ -37,3 +37,5 @@
 - (void)textSettingView:(CLTextSettingView*)settingView didChangeFont:(UIFont*)font;
 
 @end
+
+ 

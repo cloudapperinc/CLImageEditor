@@ -76,11 +76,44 @@
     return self;
 }
 
+
+
+
+
 - (void)setBgPanel
 {
-    //
+    //colors
+
+    // first 11 from schedule other from the random list
+    NSArray *colorsHex  = @[@"#D50000", @"#E67C73", @"#F4511E", @"#F6BF26", @"#33B679", @"#0B8043", @"#039BE5", @"#3F51B5", @"#7986CB", @"#8E24AA", @"#616161", @"#FF7C00", @"#5358E2", @"#00BE8E",
+                            @"#5AD0F9", @"#05A6D8", @"#826DCC",
+                            @"#FF5C4A"];
     
+    NSMutableArray *colors = [NSMutableArray array];
     
+    for (int i = 0; i <= 17; i++) {
+        NSString *colorHex = [colorsHex objectAtIndex:i];
+        UIColor *color = [self colorWithHexString: colorHex alpha: 1.0];
+        [colors addObject:color];
+    }
+    
+    for (int i = 0; i <= 2; i++)
+    {
+        for (int j = 0; j <= 5; j++)
+        {
+            UILabel *testLabel;
+            testLabel = [[UILabel alloc] initWithFrame:CGRectMake(15 + j*60, 35+ i*50, 35, 35)];
+            UIColor *color =  [colors objectAtIndex:(i*6) + j];
+            testLabel.backgroundColor = color;
+            testLabel.layer.cornerRadius = 8;
+            testLabel.layer.masksToBounds = true;
+            [_bgPanel addSubview: testLabel];
+            NSLog(@"%d", ((i*6) + j));
+        }
+    }
+ 
+     
+   
     
 }
 
@@ -304,6 +337,14 @@
 {
     _fontPickerView.textColor = textColor;
     _textView.textColor = textColor;
+}
+
+- (UIColor *)colorWithHexString:(NSString *)str_HEX  alpha:(CGFloat)alpha_range{
+    int red = 0;
+    int green = 0;
+    int blue = 0;
+    sscanf([str_HEX UTF8String], "#%02X%02X%02X", &red, &green, &blue);
+    return  [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:alpha_range];
 }
 
 - (BOOL)isFirstResponder
