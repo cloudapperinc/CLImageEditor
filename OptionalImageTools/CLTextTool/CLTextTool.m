@@ -22,6 +22,7 @@ static NSString* const kCLTextToolCloseIconName = @"closeIconAssetsName";
 static NSString* const kCLTextToolNewTextIconName = @"newTextIconAssetsName";
 static NSString* const kCLTextToolEditTextIconName = @"editTextIconAssetsName";
 static NSString* const kCLTextToolFontIconName = @"fontIconAssetsName";
+static NSString* const kCLTextToolBgIconName = @"fontBgAssetsName";
 static NSString* const kCLTextToolAlignLeftIconName = @"alignLeftIconAssetsName";
 static NSString* const kCLTextToolAlignCenterIconName = @"alignCenterIconAssetsName";
 static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsName";
@@ -60,7 +61,8 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     CLToolbarMenuItem *_textBtn;
     CLToolbarMenuItem *_colorBtn;
     CLToolbarMenuItem *_fontBtn;
-    
+    CLToolbarMenuItem *_bgBtn;
+
     CLToolbarMenuItem *_alignLeftBtn;
     CLToolbarMenuItem *_alignCenterBtn;
     CLToolbarMenuItem *_alignRightBtn;
@@ -98,6 +100,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
              kCLTextToolNewTextIconName:@"",
              kCLTextToolEditTextIconName:@"",
              kCLTextToolFontIconName:@"",
+             kCLTextToolBgIconName:@"",
              kCLTextToolAlignLeftIconName:@"",
              kCLTextToolAlignCenterIconName:@"",
              kCLTextToolAlignRightIconName:@"",
@@ -213,6 +216,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     _textBtn.userInteractionEnabled =
     _colorBtn.userInteractionEnabled =
     _fontBtn.userInteractionEnabled =
+    _bgBtn.userInteractionEnabled =
     _alignLeftBtn.userInteractionEnabled =
     _alignCenterBtn.userInteractionEnabled =
     _alignRightBtn.userInteractionEnabled = enabled;
@@ -267,6 +271,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemText" withDefault:@"Text"], @"icon":[self imageForKey:kCLTextToolEditTextIconName defaultImageName:@"icon.png"]},
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemColor" withDefault:@"Color"]},
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemFont" withDefault:@"Font"], @"icon":[self imageForKey:kCLTextToolFontIconName defaultImageName:@"btn_font.png"]},
+                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_Background" withDefault:@"Font"], @"icon":[self imageForKey:kCLTextToolBgIconName defaultImageName:@"bg.png"]},
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignLeft" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignLeftIconName defaultImageName:@"btn_align_left.png"]},
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignCenter" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignCenterIconName defaultImageName:@"btn_align_center.png"]},
                        @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignRight" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignRightIconName defaultImageName:@"btn_align_right.png"]},
@@ -292,12 +297,14 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
                 _fontBtn = view;
                 break;
             case 4:
-                _alignLeftBtn = view;
+                _bgBtn = view;
                 break;
             case 5:
-                _alignCenterBtn = view;
+                _alignLeftBtn = view;
                 break;
             case 6:
+                _alignCenterBtn = view;
+            case 7:
                 _alignRightBtn = view;
                 break;
         }
@@ -319,15 +326,16 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
         case 1:
         case 2:
         case 3:
+        case 4:
             [self showSettingViewWithMenuIndex:view.tag-1];
             break;
-        case 4:
+        case 5:
             [self setTextAlignment:NSTextAlignmentLeft];
             break;
-        case 5:
+        case 6:
             [self setTextAlignment:NSTextAlignmentCenter];
             break;
-        case 6:
+        case 7:
             [self setTextAlignment:NSTextAlignmentRight];
             break;
     }

@@ -29,6 +29,9 @@
     UITextView *_textView;
     CLColorPickerView *_colorPickerView;
     
+    UIView *_bgPanel;
+    
+    
     CLFontPickerView *_fontPickerView;
     UIView *_fontPanel;
     CLCircleView *_arialFont;
@@ -72,6 +75,15 @@
     }
     return self;
 }
+
+- (void)setBgPanel
+{
+    //
+    
+    
+    
+}
+
 
 - (void)setColorPanel
 {
@@ -261,13 +273,12 @@
     
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, self.width-42, 80)];
     _textView.delegate = self;
-    UIColor *color = [UIColor lightGrayColor];
-    color = [color colorWithAlphaComponent:0.5f];
-    _textView.backgroundColor = color;
+ 
+    _textView.backgroundColor = [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
     [_scrollView addSubview:_textView];
     
     _colorPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width, 0, self.width, self.height)];
-    _colorPanel.backgroundColor = [UIColor clearColor];
+    _colorPanel.backgroundColor = [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
     [_scrollView addSubview:_colorPanel];
     [self setColorPanel];
     
@@ -276,7 +287,12 @@
     [_scrollView addSubview:_fontPanel];
     [self setFontPanel];
     
-    _scrollView.contentSize = CGSizeMake(self.width * 3, self.height);
+    _bgPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width * 3, 0, self.width, self.height)];
+    _bgPanel.backgroundColor =  [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
+    [_scrollView addSubview:_bgPanel];
+    [self setBgPanel];
+ 
+    _scrollView.contentSize = CGSizeMake(self.width * 4, self.height);
 }
 
 - (void)dealloc
