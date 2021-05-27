@@ -16,7 +16,9 @@
 @interface CLTextSettingView()
 <CLColorPickerViewDelegate, CLFontPickerViewDelegate, UITextViewDelegate>
 @property (nonatomic, strong) UIView *selectedMode;
-@property (nonatomic, strong) CLCircleView *selectedCircle;
+@property (nonatomic, strong) CLCircleView *selectedFontName;
+@property (nonatomic, strong) CLCircleView *selectedFontType;
+
 @end
 
 
@@ -223,13 +225,20 @@
 //    _fillCircleF.radius = 0.6;
 //    [_fontPanel addSubview:_fillCircleF];
     
-    self.selectedCircle = _arialFont;
+    self.selectedFontName = _arialFont;
+    self.selectedFontType = _regularFont;
+    
+    _regularFont.tag = -1;
+    _boldFont.tag = -2;
     
     _arialFont.tag = 0;
     _courierFont.tag = 1;
     _tnrFont.tag = 2;
     _robotoFont.tag = 3;
     _verdanaFont.tag = 4;
+    
+    [_regularFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    [_boldFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     
     [_arialFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     [_courierFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
@@ -303,43 +312,84 @@
 
 - (void)fontModeViewTapped:(UITapGestureRecognizer*)sender
 {
-    self.selectedCircle = sender.view;
+    CLCircleView *selected = (CLCircleView *)sender.view;
+    
+    if (selected.tag < 0) {
+        self.selectedFontType = sender.view;
+    } else {
+        self.selectedFontName = sender.view;
+    }
 }
 
 
 #pragma mark - Properties
 
-- (void)setSelectedCircle:(CLCircleView *)selectedCircle
+-(UIFont*) changeFont: (CLCircleView *)selectedFontName :(CLCircleView *)selectedFontType {
+    
+    UIFont *font;
+    switch (selectedFontName.tag) {
+        case 0:
+            switch (selectedFontType.tag) {
+                case -1:
+                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+                    break;
+                case -2:
+                    font = [UIFont fontWithName: @"Arial-BoldMT" size: 14];
+                    break;
+                case -3:
+                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+                case -4:
+                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+                default:
+                break;
+            }
+            break;
+        case 1:
+            font = [UIFont fontWithName: @"Courier" size: 14];
+            break;
+        case 2:
+            font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+            break;
+        case 3:
+            font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
+            break;
+        case 4:
+            font = [UIFont fontWithName: @"Verdana" size: 14];
+            break;
+        default:
+           break;
+    }
+    return font;
+}
+
+
+- (void)setSelectedFontType:(CLCircleView *)selectedFontType
 {
-    if(selectedCircle != _selectedCircle){
-        _selectedCircle.color = [UIColor clearColor];
-        _selectedCircle = selectedCircle;
-        selectedCircle.color = [UIColor blackColor];
+    if(selectedFontType != _selectedFontType){
+        _selectedFontType.color = [UIColor clearColor];
+        _selectedFontType = selectedFontType;
+        selectedFontType.color = [UIColor blackColor];
         
-        UIFont *font;
-        switch (selectedCircle.tag) {
-            case 0:
-                font = [UIFont fontWithName: @"ArialMT" size: 14];
-                break;
-            case 1:
-                font = [UIFont fontWithName: @"Courier" size: 14];
-                break;
-            case 2:
-                font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
-                break;
-            case 3:
-                font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
-                break;
-            case 4:
-                font = [UIFont fontWithName: @"Verdana" size: 14];
-                break;
-            default:
-               break;
-        }
-         
+        UIFont *font = [self changeFont: self.selectedFontName :self.selectedFontType];
  
         [self didSelectFont: font];
     }
+
+}
+
+
+- (void)setSelectedFontName:(CLCircleView *)selectedCircle
+{
+    if(selectedCircle != _selectedFontName){
+        _selectedFontName.color = [UIColor clearColor];
+        _selectedFontName = selectedCircle;
+        selectedCircle.color = [UIColor blackColor];
+        
+        UIFont *font = [self changeFont: self.selectedFontName :self.selectedFontType];
+
+        [self didSelectFont: font];
+    }
+
 }
 
 
