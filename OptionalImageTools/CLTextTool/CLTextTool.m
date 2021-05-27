@@ -243,6 +243,8 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
         
         _settingView.selectedText = selectedTextView.text;
         _settingView.selectedFillColor = selectedTextView.fillColor;
+        _settingView.selectedBgColor = selectedTextView.backgroundColor;
+
         _settingView.selectedBorderColor = selectedTextView.borderColor;
         _settingView.selectedBorderWidth = selectedTextView.borderWidth;
         _settingView.selectedFont = selectedTextView.font;
@@ -355,6 +357,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     view.borderColor = _settingView.selectedBorderColor;
     view.borderWidth = _settingView.selectedBorderWidth;
     view.font = _settingView.selectedFont;
+    view.backgroundColor = _settingView.selectedBgColor;
     
     CGFloat ratio = MIN( (0.8 * _workingView.width) / view.width, (0.2 * _workingView.height) / view.height);
     [view setScale:ratio];
@@ -432,6 +435,11 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 {
     _colorBtn.iconView.backgroundColor = fillColor;
     self.selectedTextView.fillColor = fillColor;
+}
+
+- (void)textSettingView:(CLTextSettingView*)settingView didChangeBgColor:(UIColor*)bgColor
+{
+    self.selectedTextView.backgroundColor = bgColor;
 }
 
 - (void)textSettingView:(CLTextSettingView*)settingView didChangeBorderColor:(UIColor*)borderColor

@@ -30,8 +30,7 @@
     CLColorPickerView *_colorPickerView;
     
     UIView *_bgPanel;
-    
-    
+    UIColor *backGroundColor;
     CLFontPickerView *_fontPickerView;
     UIView *_fontPanel;
     CLCircleView *_arialFont;
@@ -108,12 +107,12 @@
             testLabel.layer.cornerRadius = 8;
             testLabel.layer.masksToBounds = true;
             [_bgPanel addSubview: testLabel];
-            NSLog(@"%d", ((i*6) + j));
+            testLabel.userInteractionEnabled = YES;
+            [testLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bgModeViewTapped:)]];
+//            NSLog(@"%d", ((i*6) + j));
         }
     }
  
-     
-   
     
 }
 
@@ -367,6 +366,12 @@
     self.selectedMode = sender.view;
 }
 
+- (void)bgModeViewTapped:(UITapGestureRecognizer*)sender
+{
+    backGroundColor = sender.view.backgroundColor;
+    [self.delegate textSettingView:self didChangeBgColor:backGroundColor];
+}
+ 
 - (void)fontModeViewTapped:(UITapGestureRecognizer*)sender
 {
     CLCircleView *selected = (CLCircleView *)sender.view;
@@ -540,6 +545,11 @@
 - (UIColor*)selectedFillColor
 {
     return _fillCircle.color;
+}
+
+- (UIColor*)selectedBgColor
+{
+    return  backGroundColor;
 }
 
 - (void)setSelectedBorderColor:(UIColor *)selectedBorderColor
