@@ -52,7 +52,7 @@ const CGFloat kCLFontPickerViewConstantFontSize = 14;
         
         _pickerView = [[CLPickerView alloc] initWithFrame:self.bounds];
         _pickerView.center = CGPointMake(self.width/2, self.height/2);
-        _pickerView.backgroundColor = [UIColor clearColor];
+        _pickerView.backgroundColor = [UIColor purpleColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
         [self addSubview:_pickerView];

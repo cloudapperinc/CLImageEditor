@@ -30,16 +30,32 @@
     CLFontPickerView *_fontPickerView;
     UIView *_fontPanel;
     CLCircleView *_arialFont;
+    UILabel *_arialFontLabel;
+
     CLCircleView *_courierFont;
+    UILabel *_courierFontLabel;
+
     CLCircleView *_tnrFont;
+    UILabel *_tnrFontLabel;
+
     CLCircleView *_robotoFont;
+    UILabel *_robotoLabel;
+
     CLCircleView *_montserratFont;
+    UILabel *_montserratLabel;
 
     CLCircleView *_boldFont;
+    UILabel *_boldLabel;
+    
     CLCircleView *_mediumFont;
-    CLCircleView *_italicFont;
-    CLCircleView *_regularFont;
+    UILabel *_mediumLabel;
 
+    CLCircleView *_italicFont;
+    UILabel *_italicLabel;
+
+    CLCircleView *_regularFont;
+    UILabel *_regularLabel;
+ 
     UIView *_colorPanel;
     CLCircleView *_fillCircle;
     CLCircleView *_pathCircle;
@@ -98,17 +114,7 @@
     _fontPickerView.delegate = self;
     _fontPickerView.center = CGPointMake(_fontPanel.width/2 - 10, _colorPickerView.height/2 - 5);
     [_fontPanel addSubview:_fontPickerView];
-    
-   
-    CLCircleView *_tnrFont;
-    CLCircleView *_robotoFont;
-    CLCircleView *_montserratFont;
-
-    CLCircleView *_boldFont;
-    CLCircleView *_mediumFont;
-    CLCircleView *_italicFont;
-    CLCircleView *_regularFont;
-    
+     
     _arialFont = [[CLCircleView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     _arialFont.left = 10;
     _arialFont.top = _fontPickerView.top + 20;
@@ -118,6 +124,12 @@
     _arialFont.color = [UIColor clearColor];
     [_fontPanel addSubview:_arialFont];
     
+    _arialFontLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+    _arialFontLabel.left = _arialFont.right;
+    _arialFontLabel.top = _arialFont.top;
+    _arialFontLabel.text = @"Arial";
+    [_fontPanel addSubview:_arialFontLabel];
+ 
     _courierFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
     _courierFont.top = _arialFont.bottom - 10;
     _courierFont.radius = 0.4;
@@ -126,8 +138,56 @@
     _courierFont.color = [UIColor clearColor];
     [_fontPanel addSubview:_courierFont];
 
+    _courierFontLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+    _courierFontLabel.left = _courierFont.right;
+    _courierFontLabel.top = _courierFont.top;
+    _courierFontLabel.text = @"Courier New";
+    [_fontPanel addSubview:_courierFontLabel];
    
+    _tnrFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+    _tnrFont.top = _courierFont.bottom - 10;
+    _tnrFont.radius = 0.4;
+    _tnrFont.borderWidth = 2;
+    _tnrFont.borderColor = [UIColor blackColor];
+    _tnrFont.color = [UIColor clearColor];
+    [_fontPanel addSubview:_tnrFont];
     
+    _tnrFontLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+    _tnrFontLabel.left = _tnrFont.right;
+    _tnrFontLabel.top = _tnrFont.top;
+    _tnrFontLabel.text = @"Times New Roman";
+    [_fontPanel addSubview:_tnrFontLabel];
+    
+    _robotoFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+    _robotoFont.top = _tnrFont.bottom - 10;
+    _robotoFont.radius = 0.4;
+    _robotoFont.borderWidth = 2;
+    _robotoFont.borderColor = [UIColor blackColor];
+    _robotoFont.color = [UIColor clearColor];
+    [_fontPanel addSubview:_robotoFont];
+    
+    _robotoLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+    _robotoLabel.left = _robotoFont.right;
+    _robotoLabel.top = _robotoFont.top;
+    _robotoLabel.text = @"Roboto";
+    [_fontPanel addSubview:_robotoLabel];
+    
+    _montserratFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+    _montserratFont.top = _robotoFont.bottom - 10;
+    _montserratFont.radius = 0.4;
+    _montserratFont.borderWidth = 2;
+    _montserratFont.borderColor = [UIColor blackColor];
+    _montserratFont.color = [UIColor clearColor];
+    [_fontPanel addSubview:_montserratFont];
+    
+    _montserratLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+    _montserratLabel.left = _montserratFont.right;
+    _montserratLabel.top = _montserratFont.top;
+    _montserratLabel.text = @"Verdana";
+    [_fontPanel addSubview:_montserratLabel];
+     
+     
+
 //    _fillCircleF = [[CLCircleView alloc] initWithFrame:_pathCircleF.frame];
 //    _fillCircleF.bottom = _pathCircleF.top;
 //    _fillCircleF.radius = 0.6;
@@ -137,12 +197,15 @@
     
     _arialFont.tag = 0;
     _courierFont.tag = 1;
-
+    _tnrFont.tag = 2;
+    _robotoFont.tag = 3;
+    _montserratFont.tag = 4;
+    
     [_arialFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     [_courierFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    
-   
-
+    [_tnrFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    [_robotoFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    [_montserratFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
   
 }
 - (void)customInit
@@ -170,6 +233,7 @@
     [self setColorPanel];
     
     _fontPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width * 2, 0, self.width, self.height)];
+    _fontPanel.backgroundColor =  [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
     [_scrollView addSubview:_fontPanel];
     [self setFontPanel];
     
@@ -229,6 +293,15 @@
                 break;
             case 1:
                 font = [UIFont fontWithName: @"Courier" size: 14];
+                break;
+            case 2:
+                font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+                break;
+            case 3:
+                font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
+                break;
+            case 4:
+                font = [UIFont fontWithName: @"Verdana" size: 14];
                 break;
             default:
                break;
