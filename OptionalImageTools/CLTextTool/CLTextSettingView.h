@@ -21,7 +21,7 @@
 
 - (void)setTextColor:(UIColor*)textColor;
 - (void)setFontPickerForegroundColor:(UIColor*)foregroundColor;
-
+- (void)didSelectFont:(UIFont *)font;
 - (void)showSettingMenuWithIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end

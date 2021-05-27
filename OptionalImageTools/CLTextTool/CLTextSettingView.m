@@ -16,6 +16,7 @@
 @interface CLTextSettingView()
 <CLColorPickerViewDelegate, CLFontPickerViewDelegate, UITextViewDelegate>
 @property (nonatomic, strong) UIView *selectedMode;
+@property (nonatomic, strong) CLCircleView *selectedCircle;
 @end
 
 
@@ -25,8 +26,20 @@
     
     UITextView *_textView;
     CLColorPickerView *_colorPickerView;
-    CLFontPickerView *_fontPickerView;
     
+    CLFontPickerView *_fontPickerView;
+    UIView *_fontPanel;
+    CLCircleView *_arialFont;
+    CLCircleView *_courierFont;
+    CLCircleView *_tnrFont;
+    CLCircleView *_robotoFont;
+    CLCircleView *_montserratFont;
+
+    CLCircleView *_boldFont;
+    CLCircleView *_mediumFont;
+    CLCircleView *_italicFont;
+    CLCircleView *_regularFont;
+
     UIView *_colorPanel;
     CLCircleView *_fillCircle;
     CLCircleView *_pathCircle;
@@ -79,6 +92,59 @@
     self.selectedMode = _fillCircle;
 }
 
+- (void)setFontPanel
+{
+    _fontPickerView = [[CLFontPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, 160)];
+    _fontPickerView.delegate = self;
+    _fontPickerView.center = CGPointMake(_fontPanel.width/2 - 10, _colorPickerView.height/2 - 5);
+    [_fontPanel addSubview:_fontPickerView];
+    
+   
+    CLCircleView *_tnrFont;
+    CLCircleView *_robotoFont;
+    CLCircleView *_montserratFont;
+
+    CLCircleView *_boldFont;
+    CLCircleView *_mediumFont;
+    CLCircleView *_italicFont;
+    CLCircleView *_regularFont;
+    
+    _arialFont = [[CLCircleView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    _arialFont.left = 10;
+    _arialFont.top = _fontPickerView.top + 20;
+    _arialFont.radius = 0.4;
+    _arialFont.borderWidth = 2;
+    _arialFont.borderColor = [UIColor blackColor];
+    _arialFont.color = [UIColor clearColor];
+    [_fontPanel addSubview:_arialFont];
+    
+    _courierFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+    _courierFont.top = _arialFont.bottom - 10;
+    _courierFont.radius = 0.4;
+    _courierFont.borderWidth = 2;
+    _courierFont.borderColor = [UIColor blackColor];
+    _courierFont.color = [UIColor clearColor];
+    [_fontPanel addSubview:_courierFont];
+
+   
+    
+//    _fillCircleF = [[CLCircleView alloc] initWithFrame:_pathCircleF.frame];
+//    _fillCircleF.bottom = _pathCircleF.top;
+//    _fillCircleF.radius = 0.6;
+//    [_fontPanel addSubview:_fillCircleF];
+    
+    self.selectedCircle = _arialFont;
+    
+    _arialFont.tag = 0;
+    _courierFont.tag = 1;
+
+    [_arialFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    [_courierFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    
+   
+
+  
+}
 - (void)customInit
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -103,10 +169,9 @@
     [_scrollView addSubview:_colorPanel];
     [self setColorPanel];
     
-    _fontPickerView = [[CLFontPickerView alloc] initWithFrame:CGRectMake(self.width * 2, 0, self.width, self.height)];
-    _fontPickerView.delegate = self;
-    _fontPickerView.sizeComponentHidden = YES;
-    [_scrollView addSubview:_fontPickerView];
+    _fontPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width * 2, 0, self.width, self.height)];
+    [_scrollView addSubview:_fontPanel];
+    [self setFontPanel];
     
     _scrollView.contentSize = CGSizeMake(self.width * 3, self.height);
 }
@@ -142,7 +207,38 @@
     self.selectedMode = sender.view;
 }
 
+- (void)fontModeViewTapped:(UITapGestureRecognizer*)sender
+{
+    self.selectedCircle = sender.view;
+}
+
+
 #pragma mark - Properties
+
+- (void)setSelectedCircle:(CLCircleView *)selectedCircle
+{
+    if(selectedCircle != _selectedCircle){
+        _selectedCircle.color = [UIColor clearColor];
+        _selectedCircle = selectedCircle;
+        selectedCircle.color = [UIColor blackColor];
+        
+        UIFont *font;
+        switch (selectedCircle.tag) {
+            case 0:
+                font = [UIFont fontWithName: @"ArialMT" size: 14];
+                break;
+            case 1:
+                font = [UIFont fontWithName: @"Courier" size: 14];
+                break;
+            default:
+               break;
+        }
+         
+ 
+        [self didSelectFont: font];
+    }
+}
+
 
 - (void)setSelectedMode:(UIView *)selectedMode
 {
@@ -289,13 +385,12 @@
     }
 }
 
-#pragma mark- Font picker delegate
+#pragma mark- Font picker
 
-- (void)fontPickerView:(CLFontPickerView *)pickerView didSelectFont:(UIFont *)font
+- (void)didSelectFont:(UIFont *)font
 {
-    if([self.delegate respondsToSelector:@selector(textSettingView:didChangeFont:)]){
-        [self.delegate textSettingView:self didChangeFont:font];
-    }
+    _fontPickerView.font = font;
+    [self.delegate textSettingView:self didChangeFont:font];
 }
 
 #pragma mark- UITextView delegate
