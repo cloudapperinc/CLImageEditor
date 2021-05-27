@@ -337,24 +337,76 @@
                     font = [UIFont fontWithName: @"Arial-BoldMT" size: 14];
                     break;
                 case -3:
-                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
                 case -4:
-                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
                 default:
                 break;
             }
             break;
         case 1:
-            font = [UIFont fontWithName: @"Courier" size: 14];
+            switch (selectedFontType.tag) {
+                case -1:
+                    font = [UIFont fontWithName: @"Courier" size: 14];
+                    break;
+                case -2:
+                    font = [UIFont fontWithName: @"Courier-BoldMT" size: 14];
+                    break;
+                case -3:
+                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                case -4:
+                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                default:
+                break;
+            }
             break;
         case 2:
-            font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+            switch (selectedFontType.tag) {
+                case -1:
+                    font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+                    break;
+                case -2:
+                    font = [UIFont fontWithName: @"TimesNewRomanPS-BoldMT" size: 14];
+                    break;
+                case -3:
+                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                case -4:
+                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                default:
+                break;
+            }
             break;
         case 3:
-            font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
+            switch (selectedFontType.tag) {
+                case -1:
+                    font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
+                    break;
+                case -2:
+                    font = [UIFont fontWithName: @"TimesNewRomanPS-BoldMT" size: 14];
+                    break;
+                case -3:
+                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                case -4:
+                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                default:
+                break;
+            }
             break;
         case 4:
-            font = [UIFont fontWithName: @"Verdana" size: 14];
+            switch (selectedFontType.tag) {
+                case -1:
+                    font = [UIFont fontWithName: @"Verdana" size: 14];
+                    break;
+                case -2:
+                    font = [UIFont fontWithName: @"Verdana-Bold" size: 14];
+                    break;
+                case -3:
+                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                case -4:
+                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                default:
+                break;
+            }
             break;
         default:
            break;
