@@ -41,8 +41,8 @@
     CLCircleView *_robotoFont;
     UILabel *_robotoLabel;
 
-    CLCircleView *_montserratFont;
-    UILabel *_montserratLabel;
+    CLCircleView *_verdanaFont;
+    UILabel *_verdanaLabel;
 
     CLCircleView *_boldFont;
     UILabel *_boldLabel;
@@ -172,19 +172,49 @@
     _robotoLabel.text = @"Roboto";
     [_fontPanel addSubview:_robotoLabel];
     
-    _montserratFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-    _montserratFont.top = _robotoFont.bottom - 10;
-    _montserratFont.radius = 0.4;
-    _montserratFont.borderWidth = 2;
-    _montserratFont.borderColor = [UIColor blackColor];
-    _montserratFont.color = [UIColor clearColor];
-    [_fontPanel addSubview:_montserratFont];
-    
-    _montserratLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-    _montserratLabel.left = _montserratFont.right;
-    _montserratLabel.top = _montserratFont.top;
-    _montserratLabel.text = @"Verdana";
-    [_fontPanel addSubview:_montserratLabel];
+        _verdanaFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+            _verdanaFont.top = _robotoFont.bottom - 10;
+            _verdanaFont.radius = 0.4;
+            _verdanaFont.borderWidth = 2;
+            _verdanaFont.borderColor = [UIColor blackColor];
+            _verdanaFont.color = [UIColor clearColor];
+        [_fontPanel addSubview:    _verdanaFont];
+        
+        _verdanaLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+        _verdanaLabel.left =     _verdanaFont.right;
+        _verdanaLabel.top =     _verdanaFont.top;
+        _verdanaLabel.text = @"Verdana";
+        [_fontPanel addSubview:_verdanaLabel];
+         
+        _regularFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+        _regularFont.top = _arialFont.top;
+        _regularFont.left = _arialFontLabel.right + 20;
+        _regularFont.radius = 0.4;
+        _regularFont.borderWidth = 2;
+        _regularFont.borderColor = [UIColor blackColor];
+        _regularFont.color = [UIColor clearColor];
+        [_fontPanel addSubview: _regularFont];
+
+        _regularLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+        _regularLabel.left = _regularFont.right;
+        _regularLabel.top = _regularFont.top;
+        _regularLabel.text = @"Regular";
+        [_fontPanel addSubview:_regularLabel];
+            
+        _boldFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
+        _boldFont.top = _regularFont.bottom - 10;
+        _boldFont.left = _arialFontLabel.right + 20;
+        _boldFont.radius = 0.4;
+        _boldFont.borderWidth = 2;
+        _boldFont.borderColor = [UIColor blackColor];
+        _boldFont.color = [UIColor clearColor];
+        [_fontPanel addSubview:    _boldFont];
+
+        _boldLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
+        _boldLabel.left = _boldFont.right;
+        _boldLabel.top = _boldFont.top;
+        _boldLabel.text = @"Bold";
+        [_fontPanel addSubview:_boldLabel];
      
      
 
@@ -199,13 +229,13 @@
     _courierFont.tag = 1;
     _tnrFont.tag = 2;
     _robotoFont.tag = 3;
-    _montserratFont.tag = 4;
+    _verdanaFont.tag = 4;
     
     [_arialFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     [_courierFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     [_tnrFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
     [_robotoFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_montserratFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    [_verdanaFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
   
 }
 - (void)customInit
