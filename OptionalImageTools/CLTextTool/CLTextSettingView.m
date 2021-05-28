@@ -33,33 +33,21 @@
     UIColor *backGroundColor;
     CLFontPickerView *_fontPickerView;
     UIView *_fontPanel;
-    CLCircleView *_arialFont;
-    UILabel *_arialFontLabel;
+    UIStackView *fontNameSV;
+    // -1:default -2: bold -3: italic -4: both
+    NSInteger selectedFontWeight;
+    // same as view tags 0,1,2..
+    NSInteger selectedFontName;
 
-    CLCircleView *_courierFont;
-    UILabel *_courierFontLabel;
+    UIButton *arialFontBtn;
+    UIButton *courierNewFontBtn;
+    UIButton *timesFontBtn;
+    UIButton *verdanaFontBtn;
+    UIButton *helveticaNeueFontBtn;
 
-    CLCircleView *_tnrFont;
-    UILabel *_tnrFontLabel;
-
-    CLCircleView *_robotoFont;
-    UILabel *_robotoLabel;
-
-    CLCircleView *_verdanaFont;
-    UILabel *_verdanaLabel;
-
-    CLCircleView *_boldFont;
-    UILabel *_boldLabel;
+    UIButton *boldFontBtn;
+    UIButton *italicFontBtn;
     
-    CLCircleView *_mediumFont;
-    UILabel *_mediumLabel;
-
-    CLCircleView *_italicFont;
-    UILabel *_italicLabel;
-
-    CLCircleView *_regularFont;
-    UILabel *_regularLabel;
- 
     UIView *_colorPanel;
     CLCircleView *_fillCircle;
     CLCircleView *_pathCircle;
@@ -161,136 +149,195 @@
     _fontPickerView.center = CGPointMake(_fontPanel.width/2 - 10, _colorPickerView.height/2 - 5);
     [_fontPanel addSubview:_fontPickerView];
      
-    _arialFont = [[CLCircleView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    _arialFont.left = 10;
-    _arialFont.top = _fontPickerView.top + 20;
-    _arialFont.radius = 0.4;
-    _arialFont.borderWidth = 2;
-    _arialFont.borderColor = [UIColor blackColor];
-    _arialFont.color = [UIColor clearColor];
-    [_fontPanel addSubview:_arialFont];
+    arialFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+   [arialFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
-    _arialFontLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
-    _arialFontLabel.left = _arialFont.right;
-    _arialFontLabel.top = _arialFont.top;
-    _arialFontLabel.text = @"Arial";
-    [_fontPanel addSubview:_arialFontLabel];
- 
-    _courierFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-    _courierFont.top = _arialFont.bottom - 10;
-    _courierFont.radius = 0.4;
-    _courierFont.borderWidth = 2;
-    _courierFont.borderColor = [UIColor blackColor];
-    _courierFont.color = [UIColor clearColor];
-    [_fontPanel addSubview:_courierFont];
+   [arialFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+           forState:UIControlStateNormal];
+   [arialFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+           forState:UIControlStateSelected];
 
-    _courierFontLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-    _courierFontLabel.left = _courierFont.right;
-    _courierFontLabel.top = _courierFont.top;
-    _courierFontLabel.text = @"Courier New";
-    [_fontPanel addSubview:_courierFontLabel];
-   
-    _tnrFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-    _tnrFont.top = _courierFont.bottom - 10;
-    _tnrFont.radius = 0.4;
-    _tnrFont.borderWidth = 2;
-    _tnrFont.borderColor = [UIColor blackColor];
-    _tnrFont.color = [UIColor clearColor];
-    [_fontPanel addSubview:_tnrFont];
-    
-    _tnrFontLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-    _tnrFontLabel.left = _tnrFont.right;
-    _tnrFontLabel.top = _tnrFont.top;
-    _tnrFontLabel.text = @"Times New Roman";
-    [_fontPanel addSubview:_tnrFontLabel];
-    
-    _robotoFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-    _robotoFont.top = _tnrFont.bottom - 10;
-    _robotoFont.radius = 0.4;
-    _robotoFont.borderWidth = 2;
-    _robotoFont.borderColor = [UIColor blackColor];
-    _robotoFont.color = [UIColor clearColor];
-    [_fontPanel addSubview:_robotoFont];
-    
-    _robotoLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-    _robotoLabel.left = _robotoFont.right;
-    _robotoLabel.top = _robotoFont.top;
-    _robotoLabel.text = @"Roboto";
-    [_fontPanel addSubview:_robotoLabel];
-    
-        _verdanaFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-            _verdanaFont.top = _robotoFont.bottom - 10;
-            _verdanaFont.radius = 0.4;
-            _verdanaFont.borderWidth = 2;
-            _verdanaFont.borderColor = [UIColor blackColor];
-            _verdanaFont.color = [UIColor clearColor];
-        [_fontPanel addSubview:    _verdanaFont];
-        
-        _verdanaLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-        _verdanaLabel.left =     _verdanaFont.right;
-        _verdanaLabel.top =     _verdanaFont.top;
-        _verdanaLabel.text = @"Verdana";
-        [_fontPanel addSubview:_verdanaLabel];
-         
-        _regularFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-        _regularFont.top = _arialFont.top;
-        _regularFont.left = _arialFontLabel.right + 20;
-        _regularFont.radius = 0.4;
-        _regularFont.borderWidth = 2;
-        _regularFont.borderColor = [UIColor blackColor];
-        _regularFont.color = [UIColor clearColor];
-        [_fontPanel addSubview: _regularFont];
+    [arialFontBtn addTarget:self
+               action:@selector(chkBtnHandler:)
+     forControlEvents:UIControlEventTouchUpInside];
 
-        _regularLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-        _regularLabel.left = _regularFont.right;
-        _regularLabel.top = _regularFont.top;
-        _regularLabel.text = @"Regular";
-        [_fontPanel addSubview:_regularLabel];
-            
-        _boldFont = [[CLCircleView alloc] initWithFrame:_arialFont.frame];
-        _boldFont.top = _regularFont.bottom - 10;
-        _boldFont.left = _arialFontLabel.right + 20;
-        _boldFont.radius = 0.4;
-        _boldFont.borderWidth = 2;
-        _boldFont.borderColor = [UIColor blackColor];
-        _boldFont.color = [UIColor clearColor];
-        [_fontPanel addSubview:    _boldFont];
+    // Optional title change for checked/unchecked
+    [arialFontBtn setTitle:@" Arial"
+           forState:UIControlStateNormal];
+    arialFontBtn.tintColor = [UIColor blackColor];
+    [arialFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    courierNewFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [courierNewFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
+    
+    // courier
+   [courierNewFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+           forState:UIControlStateNormal];
+   [courierNewFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+           forState:UIControlStateSelected];
 
-        _boldLabel = [[UILabel alloc] initWithFrame:_arialFontLabel.frame];
-        _boldLabel.left = _boldFont.right;
-        _boldLabel.top = _boldFont.top;
-        _boldLabel.text = @"Bold";
-        [_fontPanel addSubview:_boldLabel];
-     
-     
+    [courierNewFontBtn addTarget:self
+               action:@selector(chkBtnHandler:)
+     forControlEvents:UIControlEventTouchUpInside];
 
-//    _fillCircleF = [[CLCircleView alloc] initWithFrame:_pathCircleF.frame];
-//    _fillCircleF.bottom = _pathCircleF.top;
-//    _fillCircleF.radius = 0.6;
-//    [_fontPanel addSubview:_fillCircleF];
+    // Optional title change for checked/unchecked
+    [courierNewFontBtn setTitle:@" Courier New"
+           forState:UIControlStateNormal];
+    courierNewFontBtn.tintColor = [UIColor blackColor];
+    [courierNewFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
-    self.selectedFontName = _arialFont;
-    self.selectedFontType = _regularFont;
     
-    _regularFont.tag = -1;
-    _boldFont.tag = -2;
+     timesFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+   [timesFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
-    _arialFont.tag = 0;
-    _courierFont.tag = 1;
-    _tnrFont.tag = 2;
-    _robotoFont.tag = 3;
-    _verdanaFont.tag = 4;
+    // courier
+   [timesFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+           forState:UIControlStateNormal];
+   [timesFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+           forState:UIControlStateSelected];
+
+    [timesFontBtn addTarget:self
+               action:@selector(chkBtnHandler:)
+     forControlEvents:UIControlEventTouchUpInside];
+
+    // Optional title change for checked/unchecked
+    [timesFontBtn setTitle:@" Times New Roman"
+           forState:UIControlStateNormal];
+    timesFontBtn.tintColor = [UIColor blackColor];
+    [timesFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
-    [_regularFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_boldFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+    // verdana
+    verdanaFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+   [verdanaFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
-    [_arialFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_courierFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_tnrFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_robotoFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
-    [_verdanaFont addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fontModeViewTapped:)]];
+   [verdanaFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+           forState:UIControlStateNormal];
+   [verdanaFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+           forState:UIControlStateSelected];
+
+    [verdanaFontBtn addTarget:self
+               action:@selector(chkBtnHandler:)
+     forControlEvents:UIControlEventTouchUpInside];
+
+    // Optional title change for checked/unchecked
+    [verdanaFontBtn setTitle:@" Verdana"
+           forState:UIControlStateNormal];
+    verdanaFontBtn.tintColor = [UIColor blackColor];
+    [verdanaFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    // Helvetica Neue
+    helveticaNeueFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+   [helveticaNeueFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
+   [helveticaNeueFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+           forState:UIControlStateNormal];
+   [helveticaNeueFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+           forState:UIControlStateSelected];
+
+    [helveticaNeueFontBtn addTarget:self
+               action:@selector(chkBtnHandler:)
+     forControlEvents:UIControlEventTouchUpInside];
+
+    // Optional title change for checked/unchecked
+    [helveticaNeueFontBtn setTitle:@" Helvetica Neue"
+           forState:UIControlStateNormal];
+    helveticaNeueFontBtn.tintColor = [UIColor blackColor];
+    [helveticaNeueFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   
+    fontNameSV = [[UIStackView alloc] init];
+
+    fontNameSV.axis = UILayoutConstraintAxisVertical;
+    fontNameSV.distribution = UIStackViewDistributionEqualSpacing;
+    fontNameSV.alignment = UIStackViewAlignmentLeading;
+    fontNameSV.spacing = 10;
+
+    [fontNameSV addArrangedSubview:arialFontBtn];
+    [fontNameSV addArrangedSubview:verdanaFontBtn];
+    [fontNameSV addArrangedSubview:courierNewFontBtn];
+    [fontNameSV addArrangedSubview:helveticaNeueFontBtn];
+    [fontNameSV addArrangedSubview:timesFontBtn];
+
+    fontNameSV.translatesAutoresizingMaskIntoConstraints = false;
+    [_fontPanel addSubview:fontNameSV];
+
+    //Layout for Stack View
+    [fontNameSV.leadingAnchor constraintEqualToAnchor:_fontPanel.centerXAnchor constant: -160].active = true;
+    [fontNameSV.centerYAnchor constraintEqualToAnchor:_fontPanel.centerYAnchor].active = true;
+    
+     
+    // font weight
+    
+       italicFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+       [italicFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
+        
+       [italicFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+               forState:UIControlStateNormal];
+       [italicFontBtn setImage:[UIImage imageNamed:@"checked.png"]
+               forState:UIControlStateSelected];
+
+    [italicFontBtn addTarget:self
+                   action:@selector(chkBtnHandler:)
+         forControlEvents:UIControlEventTouchUpInside];
+
+        // Optional title change for checked/unchecked
+        [italicFontBtn setTitle:@" Italic"
+               forState:UIControlStateNormal];
+        italicFontBtn.tintColor = [UIColor blackColor];
+        [italicFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [italicFontBtn.titleLabel setFont:[UIFont fontWithName:@"Arial-ItalicMT" size:16.0] ];
+ 
+        boldFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [boldFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
+          
+        [boldFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+            forState:UIControlStateNormal];
+        [boldFontBtn setImage:[UIImage imageNamed:@"checked.png"]
+            forState:UIControlStateSelected];
+
+        [boldFontBtn addTarget:self
+                action:@selector(chkBtnHandler:)
+      forControlEvents:UIControlEventTouchUpInside];
+
+        // Optional title change for checked/unchecked
+        [boldFontBtn setTitle:@" Bold"
+            forState:UIControlStateNormal];
+        boldFontBtn.tintColor = [UIColor blackColor];
+        [boldFontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [boldFontBtn.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16.0]];
+  
+    //Stack View
+        UIStackView *fontWeightSV = [[UIStackView alloc] init];
+
+        fontWeightSV.axis = UILayoutConstraintAxisVertical;
+        fontWeightSV.distribution = UIStackViewDistributionEqualSpacing;
+        fontWeightSV.alignment = UIStackViewAlignmentLeading;
+        fontWeightSV.spacing = 15;
+ 
+        [fontWeightSV addArrangedSubview:boldFontBtn];
+        [fontWeightSV addArrangedSubview:italicFontBtn];
+ 
+        fontWeightSV.translatesAutoresizingMaskIntoConstraints = false;
+        [_fontPanel addSubview:fontWeightSV];
+ 
+        //Layout for Stack View
+        [fontWeightSV.leadingAnchor constraintEqualToAnchor:_fontPanel.centerXAnchor constant:80].active = true;
+        [fontWeightSV.centerYAnchor constraintEqualToAnchor:_fontPanel.centerYAnchor].active = true;
+  
+    arialFontBtn.tag = 0;
+    verdanaFontBtn.tag = 1;
+    courierNewFontBtn.tag = 2;
+    helveticaNeueFontBtn.tag = 3;
+    timesFontBtn.tag = 4;
+
+    italicFontBtn.tag = -1;
+    boldFontBtn.tag = -2;
+    
+    // default values
+    selectedFontWeight = -1; // Regular
+    selectedFontName = 0; // Arial
+    
 }
+
+
 - (void)customInit
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -303,11 +350,15 @@
     _scrollView.scrollEnabled = NO;
     [self addSubview:_scrollView];
     
+    UIView *dummyView;
+    dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+    [_scrollView addSubview:dummyView];
+    dummyView.backgroundColor = [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
+    
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, self.width-42, 80)];
     _textView.delegate = self;
- 
-    _textView.backgroundColor = [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
     [_scrollView addSubview:_textView];
+    _textView.backgroundColor = [UIColor clearColor];
     
     _colorPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width, 0, self.width, self.height)];
     _colorPanel.backgroundColor = [UIColor colorWithRed:214.0/255.0 green:238.0/255.0 blue:247.0/255.0 alpha:0.7];
@@ -371,141 +422,145 @@
     backGroundColor = sender.view.backgroundColor;
     [self.delegate textSettingView:self didChangeBgColor:backGroundColor];
 }
- 
-- (void)fontModeViewTapped:(UITapGestureRecognizer*)sender
-{
-    CLCircleView *selected = (CLCircleView *)sender.view;
-    
-    if (selected.tag < 0) {
-        self.selectedFontType = sender.view;
+  
+- (void)chkBtnHandler:(UIButton *)sender {
+    // If checked, uncheck and visa versa
+    if (sender.tag < 0) {
+         
+        [sender setSelected:!sender.isSelected];
+        // change font weight variable
+        if (!boldFontBtn.isSelected && !italicFontBtn.isSelected) {
+            selectedFontWeight = -1;
+        } else if (boldFontBtn.isSelected && !italicFontBtn.isSelected) {
+            selectedFontWeight = -2;
+        } else if (boldFontBtn.isSelected && !italicFontBtn.isSelected) {
+            selectedFontWeight = -3;
+        } else {
+            selectedFontWeight = -4;
+        }
+        
+        // change font
+        UIFont *font = [self getFont];
+        [self didSelectFont: font];
+        
     } else {
-        self.selectedFontName = sender.view;
+        
+        for (UIButton *button in fontNameSV.subviews)
+           {
+               if (button.tag != sender.tag) {
+                   [button setSelected: NO];
+               } else {
+                   if (!sender.isSelected) {
+                       [sender setSelected: YES];
+                       selectedFontName = sender.tag;
+                       // change font
+                       UIFont *font = [self getFont];
+                       [self didSelectFont: font];
+                   }
+               }
+           }
+         
     }
+     
+    
 }
 
 
 #pragma mark - Properties
 
--(UIFont*) changeFont: (CLCircleView *)selectedFontName :(CLCircleView *)selectedFontType {
-    
+-(UIFont*) getFont {
+
     UIFont *font;
-    switch (selectedFontName.tag) {
-        case 0:
-            switch (selectedFontType.tag) {
-                case -1:
-                    font = [UIFont fontWithName: @"ArialMT" size: 14];
+
+        switch (selectedFontName) {
+                
+            case 0:
+                switch (selectedFontWeight) {
+                    case -1:
+                        font = [UIFont fontWithName: @"ArialMT" size: 14];
+                        break;
+                    case -2:
+                        font = [UIFont fontWithName: @"Arial-BoldMT" size: 14];
+                        break;
+                    case -3:
+                        font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                    case -4:
+                        font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                    default:
                     break;
-                case -2:
-                    font = [UIFont fontWithName: @"Arial-BoldMT" size: 14];
-                    break;
-                case -3:
-                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
-                case -4:
-                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
-                default:
+                }
                 break;
-            }
-            break;
-        case 1:
-            switch (selectedFontType.tag) {
-                case -1:
-                    font = [UIFont fontWithName: @"Courier" size: 14];
+            case 1:
+                switch (selectedFontWeight) {
+                    case -1:
+                        font = [UIFont fontWithName: @"CourierNewPSMT" size: 14];
+                        break;
+                    case -2:
+                        font = [UIFont fontWithName: @"CourierNewPS-BoldMT" size: 14];
+                        break;
+                    case -3:
+                        font = [UIFont fontWithName: @"CourierNewPS-ItalicMT" size: 14];
+                    case -4:
+                        font = [UIFont fontWithName: @"CourierNewPS-BoldItalicMT" size: 14];
+                    default:
                     break;
-                case -2:
-                    font = [UIFont fontWithName: @"Courier-BoldMT" size: 14];
-                    break;
-                case -3:
-                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
-                case -4:
-                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
-                default:
+                }
                 break;
-            }
-            break;
-        case 2:
-            switch (selectedFontType.tag) {
-                case -1:
-                    font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+            case 2:
+                switch (selectedFontWeight) {
+                    case -1:
+                        font = [UIFont fontWithName: @"TimesNewRomanPSMT" size: 14];
+                        break;
+                    case -2:
+                        font = [UIFont fontWithName: @"TimesNewRomanPS-BoldMT" size: 14];
+                        break;
+                    case -3:
+                        font = [UIFont fontWithName: @"TimesNewRomanPS-ItalicMT" size: 14];
+                    case -4:
+                        font = [UIFont fontWithName: @"TimesNewRomanPS-BoldItalicMT" size: 14];
+                    default:
                     break;
-                case -2:
-                    font = [UIFont fontWithName: @"TimesNewRomanPS-BoldMT" size: 14];
-                    break;
-                case -3:
-                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
-                case -4:
-                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
-                default:
+                }
                 break;
-            }
-            break;
-        case 3:
-            switch (selectedFontType.tag) {
-                case -1:
-                    font = [UIFont fontWithName: @"Roboto-Regular" size: 14];
+            case 3:
+                switch (selectedFontWeight) {
+                    case -1:
+                        font = [UIFont fontWithName: @"Verdana" size: 14];
+                        break;
+                    case -2:
+                        font = [UIFont fontWithName: @"Verdana-Bold" size: 14];
+                        break;
+                    case -3:
+                        font = [UIFont fontWithName: @"Verdana-Italic" size: 14];
+                    case -4:
+                        font = [UIFont fontWithName: @"Verdana-BoldItalic" size: 14];
+                    default:
                     break;
-                case -2:
-                    font = [UIFont fontWithName: @"TimesNewRomanPS-BoldMT" size: 14];
-                    break;
-                case -3:
-                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
-                case -4:
-                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
-                default:
+                }
                 break;
-            }
-            break;
-        case 4:
-            switch (selectedFontType.tag) {
-                case -1:
-                    font = [UIFont fontWithName: @"Verdana" size: 14];
+            case 4:
+                switch (selectedFontWeight) {
+                    case -1:
+                        font = [UIFont fontWithName: @"HelveticaNeue" size: 14];
+                        break;
+                    case -2:
+                        font = [UIFont fontWithName: @"HelveticaNeue-Bold" size: 14];
+                        break;
+                    case -3:
+                        font = [UIFont fontWithName: @"HelveticaNeue-Italic" size: 14];
+                    case -4:
+                        font = [UIFont fontWithName: @"HelveticaNeue-BoldItalic" size: 14];
+                    default:
                     break;
-                case -2:
-                    font = [UIFont fontWithName: @"Verdana-Bold" size: 14];
-                    break;
-                case -3:
-                    font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
-                case -4:
-                    font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
-                default:
+                }
                 break;
-            }
-            break;
-        default:
-           break;
-    }
-    return font;
+            default:
+               break;
+        }
+    
+        return font;
 }
-
-
-- (void)setSelectedFontType:(CLCircleView *)selectedFontType
-{
-    if(selectedFontType != _selectedFontType){
-        _selectedFontType.color = [UIColor clearColor];
-        _selectedFontType = selectedFontType;
-        selectedFontType.color = [UIColor blackColor];
-        
-        UIFont *font = [self changeFont: self.selectedFontName :self.selectedFontType];
  
-        [self didSelectFont: font];
-    }
-
-}
-
-
-- (void)setSelectedFontName:(CLCircleView *)selectedCircle
-{
-    if(selectedCircle != _selectedFontName){
-        _selectedFontName.color = [UIColor clearColor];
-        _selectedFontName = selectedCircle;
-        selectedCircle.color = [UIColor blackColor];
-        
-        UIFont *font = [self changeFont: self.selectedFontName :self.selectedFontType];
-
-        [self didSelectFont: font];
-    }
-
-}
-
 
 - (void)setSelectedMode:(UIView *)selectedMode
 {

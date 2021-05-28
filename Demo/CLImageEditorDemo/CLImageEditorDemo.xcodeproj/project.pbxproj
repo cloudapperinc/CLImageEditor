@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		282A6E31265FAF0500AC650C /* default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 282A6E30265FAF0500AC650C /* default.jpg */; };
+		282A6E352660007000AC650C /* default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 282A6E342660007000AC650C /* default.jpg */; };
 		AD1D2C6B1897538900752339 /* CLGPUImageVignetteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1D2C6A1897538900752339 /* CLGPUImageVignetteFilter.m */; };
 		AD29BB5D18EA471A0084D3D6 /* CLEmoticonTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD29BB5C18EA471A0084D3D6 /* CLEmoticonTool.m */; };
 		AD359C321954FB4D00B763CF /* CLSplashTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD359C311954FB4D00B763CF /* CLSplashTool.m */; };
@@ -68,7 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		282A6E30265FAF0500AC650C /* default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default.jpg; sourceTree = "<group>"; };
+		282A6E342660007000AC650C /* default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default.jpg; sourceTree = "<group>"; };
 		AD13E67C1850F7C8009B12AD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD1D2C691897538900752339 /* CLGPUImageVignetteFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLGPUImageVignetteFilter.h; path = CLGPUImageFilters/CLGPUImageVignetteFilter.h; sourceTree = "<group>"; };
 		AD1D2C6A1897538900752339 /* CLGPUImageVignetteFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLGPUImageVignetteFilter.m; path = CLGPUImageFilters/CLGPUImageVignetteFilter.m; sourceTree = "<group>"; };
@@ -485,7 +485,7 @@
 				AD5C1E0A18350DC400790989 /* Supporting Files */,
 				AD5C1E1B18350DC400790989 /* Images.xcassets */,
 				AD5C1E8918350F1800790989 /* demo.jpg */,
-				282A6E30265FAF0500AC650C /* default.jpg */,
+				282A6E342660007000AC650C /* default.jpg */,
 				AD5C1E1218350DC400790989 /* AppDelegate.h */,
 				AD5C1E1318350DC400790989 /* AppDelegate.m */,
 				AD5C1E1518350DC400790989 /* Main.storyboard */,
@@ -569,7 +569,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				282A6E31265FAF0500AC650C /* default.jpg in Resources */,
+				282A6E352660007000AC650C /* default.jpg in Resources */,
 				AD5C1E1C18350DC400790989 /* Images.xcassets in Resources */,
 				AD5C1E0E18350DC400790989 /* InfoPlist.strings in Resources */,
 				AD5A03401897528000347C57 /* CLImageEditor.bundle in Resources */,
