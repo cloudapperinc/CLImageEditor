@@ -335,7 +335,8 @@
     // default values
     selectedFontWeight = -1; // Regular
     selectedFontName = 0; // Arial
-    
+     
+    [arialFontBtn setSelected: YES];
 }
 
 
