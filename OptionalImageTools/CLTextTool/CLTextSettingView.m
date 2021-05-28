@@ -84,12 +84,13 @@
         [colors addObject:color];
     }
     
+    // adding stackViews didnt work here. First designed for iphoneSE2 (which is 375 width)
     for (int i = 0; i <= 2; i++)
     {
         for (int j = 0; j <= 5; j++)
         {
             UILabel *testLabel;
-            testLabel = [[UILabel alloc] initWithFrame:CGRectMake(15 + j*60, 35+ i*50, 35, 35)];
+            testLabel = [[UILabel alloc] initWithFrame:CGRectMake( (_bgPanel.width-375)/2 + 15 + j*60, 35+ i*50, 35, 35)];
             UIColor *color =  [colors objectAtIndex:(i*6) + j];
             testLabel.backgroundColor = color;
             testLabel.layer.cornerRadius = 8;
