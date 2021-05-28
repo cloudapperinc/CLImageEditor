@@ -6,6 +6,7 @@
 //
 
 #import "CLTextSettingView.h"
+#import "CLImageToolBase.h"
 
 #import "UIView+Frame.h"
 #import "CLImageEditorTheme.h"
@@ -150,12 +151,16 @@
     _fontPickerView.center = CGPointMake(_fontPanel.width/2 - 10, _colorPickerView.height/2 - 5);
     [_fontPanel addSubview:_fontPickerView];
      
+    UIImage *unchecked = [CLImageEditorTheme imageNamed:[self class] image:@"unchecked.png"];
+    UIImage *checked = [CLImageEditorTheme imageNamed:[self class] image:@"checked.png"];
+    UIImage *radioChecked = [CLImageEditorTheme imageNamed:[self class] image:@"radioChecked.png"];
+
     arialFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
    [arialFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
-   [arialFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+   [arialFontBtn setImage:unchecked
            forState:UIControlStateNormal];
-   [arialFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+   [arialFontBtn setImage:radioChecked
            forState:UIControlStateSelected];
 
     [arialFontBtn addTarget:self
@@ -172,9 +177,9 @@
     [courierNewFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
     // courier
-   [courierNewFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+   [courierNewFontBtn setImage:unchecked
            forState:UIControlStateNormal];
-   [courierNewFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+   [courierNewFontBtn setImage:radioChecked
            forState:UIControlStateSelected];
 
     [courierNewFontBtn addTarget:self
@@ -192,9 +197,9 @@
    [timesFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
     // courier
-   [timesFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+   [timesFontBtn setImage:unchecked
            forState:UIControlStateNormal];
-   [timesFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+   [timesFontBtn setImage:radioChecked
            forState:UIControlStateSelected];
 
     [timesFontBtn addTarget:self
@@ -211,9 +216,9 @@
     verdanaFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
    [verdanaFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
     
-   [verdanaFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+   [verdanaFontBtn setImage:unchecked
            forState:UIControlStateNormal];
-   [verdanaFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+   [verdanaFontBtn setImage:radioChecked
            forState:UIControlStateSelected];
 
     [verdanaFontBtn addTarget:self
@@ -229,9 +234,9 @@
     // Helvetica Neue
     helveticaNeueFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
    [helveticaNeueFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
-   [helveticaNeueFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+   [helveticaNeueFontBtn setImage:unchecked
            forState:UIControlStateNormal];
-   [helveticaNeueFontBtn setImage:[UIImage imageNamed:@"radioChecked.png"]
+   [helveticaNeueFontBtn setImage:radioChecked
            forState:UIControlStateSelected];
 
     [helveticaNeueFontBtn addTarget:self
@@ -270,9 +275,9 @@
        italicFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
        [italicFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
         
-       [italicFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+       [italicFontBtn setImage:unchecked
                forState:UIControlStateNormal];
-       [italicFontBtn setImage:[UIImage imageNamed:@"checked.png"]
+       [italicFontBtn setImage:checked
                forState:UIControlStateSelected];
 
     [italicFontBtn addTarget:self
@@ -289,9 +294,9 @@
         boldFontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [boldFontBtn setFrame:CGRectMake(0, 0, 100, 40)];
           
-        [boldFontBtn setImage:[UIImage imageNamed:@"unchecked.png"]
+        [boldFontBtn setImage:unchecked
             forState:UIControlStateNormal];
-        [boldFontBtn setImage:[UIImage imageNamed:@"checked.png"]
+        [boldFontBtn setImage:checked
             forState:UIControlStateSelected];
 
         [boldFontBtn addTarget:self
