@@ -41,7 +41,7 @@ const CGFloat kCLFontPickerViewConstantFontSize = 14;
 
 + (UIFont*)defaultFont
 {
-    return [UIFont fontWithName:@"HiraKakuProN-W3"size:kCLFontPickerViewConstantFontSize];
+    return [UIFont fontWithName:@"ArialMT"size:kCLFontPickerViewConstantFontSize];
 }
 
 - (id)initWithFrame:(CGRect)frame

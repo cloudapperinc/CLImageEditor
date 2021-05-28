@@ -433,7 +433,7 @@
             selectedFontWeight = -1;
         } else if (boldFontBtn.isSelected && !italicFontBtn.isSelected) {
             selectedFontWeight = -2;
-        } else if (boldFontBtn.isSelected && !italicFontBtn.isSelected) {
+        } else if (!boldFontBtn.isSelected && italicFontBtn.isSelected) {
             selectedFontWeight = -3;
         } else {
             selectedFontWeight = -4;
@@ -484,8 +484,10 @@
                         break;
                     case -3:
                         font = [UIFont fontWithName: @"Arial-ItalicMT" size: 14];
+                        break;
                     case -4:
                         font = [UIFont fontWithName: @"Arial-BoldItalicMT" size: 14];
+                        break;
                     default:
                     break;
                 }
@@ -500,8 +502,10 @@
                         break;
                     case -3:
                         font = [UIFont fontWithName: @"CourierNewPS-ItalicMT" size: 14];
+                        break;
                     case -4:
                         font = [UIFont fontWithName: @"CourierNewPS-BoldItalicMT" size: 14];
+                        break;
                     default:
                     break;
                 }
@@ -516,8 +520,10 @@
                         break;
                     case -3:
                         font = [UIFont fontWithName: @"TimesNewRomanPS-ItalicMT" size: 14];
+                        break;
                     case -4:
                         font = [UIFont fontWithName: @"TimesNewRomanPS-BoldItalicMT" size: 14];
+                        break;
                     default:
                     break;
                 }
@@ -532,8 +538,10 @@
                         break;
                     case -3:
                         font = [UIFont fontWithName: @"Verdana-Italic" size: 14];
+                        break;
                     case -4:
                         font = [UIFont fontWithName: @"Verdana-BoldItalic" size: 14];
+                        break;
                     default:
                     break;
                 }
@@ -548,8 +556,10 @@
                         break;
                     case -3:
                         font = [UIFont fontWithName: @"HelveticaNeue-Italic" size: 14];
+                        break;
                     case -4:
                         font = [UIFont fontWithName: @"HelveticaNeue-BoldItalic" size: 14];
+                        break;
                     default:
                     break;
                 }
