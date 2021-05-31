@@ -321,6 +321,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
 {
     [super viewDidLoad];
     
+    flag = YES;
     self.title = self.toolInfo.title;
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = self.theme.backgroundColor;
@@ -639,12 +640,19 @@ static const CGFloat kMenuBarHeight = 80.0f;
     return UIInterfaceOrientationMaskAll;
 }
 
+BOOL flag;
+
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     [self resetImageViewFrame];
     [self refreshToolSettings];
     [self scrollViewDidZoom:_scrollView];
+    if (flag && self.blank) {
+        [self setupToolWithToolInfo:self.toolInfo.sortedSubtools[5]];
+        flag = NO;
+    }
+         
 }
 
 - (BOOL)prefersStatusBarHidden
