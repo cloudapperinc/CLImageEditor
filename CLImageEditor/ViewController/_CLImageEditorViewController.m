@@ -58,7 +58,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if (self){
         _originalImage = [image deepCopy];
         self.delegate = delegate;
-        blank = blank;
+        self.blank = blank;
     }
     return self;
 }
