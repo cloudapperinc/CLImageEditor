@@ -6,10 +6,8 @@
 //
 
 #import "_CLImageEditorViewController.h"
-
 #import "CLImageToolBase.h"
 
-BOOL blank = false;
 #pragma mark- _CLImageEditorViewController
 
 static const CGFloat kNavBarHeight = 44.0f;
@@ -20,7 +18,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
-
+@property (nonatomic, assign) BOOL blank;
 @end
 
 
@@ -638,7 +636,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     [self resetImageViewFrame];
     [self refreshToolSettings];
     [self scrollViewDidZoom:_scrollView];
-    if (blank) {
+    if (self.blank) {
         [self setupToolWithToolInfo:self.toolInfo.sortedSubtools[3]];
     }
          
@@ -661,7 +659,18 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if(currentTool != _currentTool){
         [_currentTool cleanup];
         _currentTool = currentTool;
-        [_currentTool setup];
+        
+        if (self.blank) {
+            [_currentTool setupWB:^(BOOL edited){
+                // we check with listener if item edited
+                if (edited) {
+                    _navigationBar.items[1].rightBarButtonItem.enabled = YES;
+                }
+             }];
+            
+        } else {
+            [_currentTool setup];
+        }
         
         [self swapToolBarWithEditing:(_currentTool!=nil)];
     }
@@ -722,9 +731,10 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if(self.currentTool){
         UINavigationItem *item  = [[UINavigationItem alloc] initWithTitle:self.currentTool.toolInfo.title];
         
-        if (blank) {
+        if (self.blank) {
             // custom action for white board
             item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_DoneBtnTitle" withDefault:@"Done"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtnWB:)];
+            item.rightBarButtonItem.enabled = NO;
             item.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
         } else {
             item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_OKBtnTitle" withDefault:@"OK"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtn:)];
@@ -786,17 +796,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
             [self presentViewController:alert animated:YES completion:nil];
         }
         else if(image){
-            // move this inside draw
-            if (blank) {
-                NSData *data1 = UIImagePNGRepresentation(_originalImage);
-                NSData *data2 = UIImagePNGRepresentation(image);
-                
-                if (![data1 isEqualToData:data2]) {
-                    self.navigationItem.rightBarButtonItem.enabled = YES;
-                    _navigationBar.items.firstObject.rightBarButtonItem.enabled = YES;
-                }
-            }
-          
+   
             self->_originalImage = image;
             self->_imageView.image = image;
             

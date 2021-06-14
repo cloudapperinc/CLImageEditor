@@ -8,6 +8,7 @@
 #import "CLDrawTool.h"
 
 static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
+typedef void (^ButtonCompletionBlock)(BOOL edited);
 
 @implementation CLDrawTool
 {
@@ -21,7 +22,8 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     UIView *_strokePreview;
     UIView *_strokePreviewBackground;
     UIImageView *_eraserIcon;
-    
+    ButtonCompletionBlock edited;
+    BOOL editingFlag;
     CLToolbarMenuItem *_colorBtn;
 }
 
@@ -86,6 +88,14 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
                          self->_menuView.transform = CGAffineTransformIdentity;
                      }];
     
+}
+
+ 
+
+- (void)setupWB:(ButtonCompletionBlock)imgEdited  {
+    [self setup];
+    editingFlag = false;
+    edited = imgEdited;
 }
 
 - (void)cleanup
@@ -303,6 +313,11 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     if(sender.state != UIGestureRecognizerStateEnded){
         [self drawLine:_prevDraggingPosition to:currentDraggingPosition];
+        if (!editingFlag) {
+            edited(true);
+            editingFlag = true;
+        }
+        
     }
     _prevDraggingPosition = currentDraggingPosition;
 }

@@ -68,6 +68,11 @@
     
 }
 
+- (void)setupWB:(ButtonCompletionBlock)imgEdited
+{
+    
+}
+
 - (void)cleanup
 {
     
