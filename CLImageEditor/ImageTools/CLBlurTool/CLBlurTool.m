@@ -145,6 +145,11 @@ typedef NS_ENUM(NSUInteger, CLBlurType)
     });
 }
 
++ (CGFloat)defaultDockedNumber
+{
+    return 4.4;
+}
+
 - (CGFloat)getBlurValue
 {
     __block CGFloat value = 0;

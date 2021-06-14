@@ -75,6 +75,11 @@ static NSString* const kCLAdjustmentToolContrastIconName = @"contrastIconAssetsN
     });
 }
 
++ (CGFloat)defaultDockedNumber
+{
+    return 7.4;
+}
+
 #pragma mark- optional info
 
 + (NSDictionary*)optionalInfo

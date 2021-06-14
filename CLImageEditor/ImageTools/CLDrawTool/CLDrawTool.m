@@ -42,7 +42,7 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
 
 + (CGFloat)defaultDockedNumber
 {
-    return 4.5;
+    return 3.7;
 }
 
 #pragma mark- optional info

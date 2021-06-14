@@ -96,6 +96,11 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
 
 #pragma mark- implementation
 
++ (CGFloat)defaultDockedNumber
+{
+    return 3.8;
+}
+
 - (void)setup
 {
     [self.editor fixZoomScaleWithAnimated:YES];

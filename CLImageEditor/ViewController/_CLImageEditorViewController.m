@@ -639,7 +639,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     [self refreshToolSettings];
     [self scrollViewDidZoom:_scrollView];
     if (blank) {
-        [self setupToolWithToolInfo:self.toolInfo.sortedSubtools[5]];
+        [self setupToolWithToolInfo:self.toolInfo.sortedSubtools[3]];
     }
          
 }

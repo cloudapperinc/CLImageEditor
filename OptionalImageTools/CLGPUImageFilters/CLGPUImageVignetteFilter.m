@@ -15,7 +15,7 @@
 
 + (CGFloat)defaultDockedNumber
 {
-    return 2.5;
+    return 6.5;
 }
 
 + (NSString*)defaultTitle
