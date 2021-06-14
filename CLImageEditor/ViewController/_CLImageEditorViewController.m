@@ -9,7 +9,7 @@
 
 #import "CLImageToolBase.h"
 
-
+BOOL blank = false;
 #pragma mark- _CLImageEditorViewController
 
 static const CGFloat kNavBarHeight = 44.0f;
@@ -20,7 +20,6 @@ static const CGFloat kMenuBarHeight = 80.0f;
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
-@property (nonatomic, assign) BOOL blank;
 
 @end
 
@@ -61,7 +60,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if (self){
         _originalImage = [image deepCopy];
         self.delegate = delegate;
-        self.blank = blank;
+        blank = blank;
     }
     return self;
 }
@@ -99,18 +98,12 @@ static const CGFloat kMenuBarHeight = 80.0f;
 - (void)initNavigationBar
 {
     self.navigationItem.rightBarButtonItem = [self createDoneButton];
-    if (self.blank) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 
     if(_navigationBar==nil){
         UINavigationItem *navigationItem  = [[UINavigationItem alloc] init];
         navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
         navigationItem.rightBarButtonItem = [self createDoneButton];
-        if (self.blank) {
-            navigationItem.rightBarButtonItem.enabled = NO;
-        }
         CGFloat dy = MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
         
         UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, dy, self.view.width, kNavBarHeight)];
@@ -321,7 +314,6 @@ static const CGFloat kMenuBarHeight = 80.0f;
 {
     [super viewDidLoad];
     
-    flag = YES;
     self.title = self.toolInfo.title;
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = self.theme.backgroundColor;
@@ -640,17 +632,14 @@ static const CGFloat kMenuBarHeight = 80.0f;
     return UIInterfaceOrientationMaskAll;
 }
 
-BOOL flag;
-
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     [self resetImageViewFrame];
     [self refreshToolSettings];
     [self scrollViewDidZoom:_scrollView];
-    if (flag && self.blank) {
+    if (blank) {
         [self setupToolWithToolInfo:self.toolInfo.sortedSubtools[5]];
-        flag = NO;
     }
          
 }
@@ -732,9 +721,16 @@ BOOL flag;
     
     if(self.currentTool){
         UINavigationItem *item  = [[UINavigationItem alloc] initWithTitle:self.currentTool.toolInfo.title];
-        item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_OKBtnTitle" withDefault:@"OK"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtn:)];
-        item.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_BackBtnTitle" withDefault:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
         
+        if (blank) {
+            // custom action for white board
+            item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_DoneBtnTitle" withDefault:@"Done"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtnWB:)];
+            item.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
+        } else {
+            item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_OKBtnTitle" withDefault:@"OK"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtn:)];
+            item.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_BackBtnTitle" withDefault:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
+        }
+         
         [_navigationBar pushNavigationItem:item animated:(self.navigationController==nil)];
     }
     else{
@@ -790,8 +786,8 @@ BOOL flag;
             [self presentViewController:alert animated:YES completion:nil];
         }
         else if(image){
-            
-            if (self.blank) {
+            // move this inside draw
+            if (blank) {
                 NSData *data1 = UIImagePNGRepresentation(_originalImage);
                 NSData *data2 = UIImagePNGRepresentation(image);
                 
@@ -811,6 +807,46 @@ BOOL flag;
           
           
     }];
+}
+
+- (IBAction)pushedDoneBtnWB:(id)sender
+{
+    self.view.userInteractionEnabled = NO;
+    
+    [self.currentTool executeWithCompletionBlock:^(UIImage *image, NSError *error, NSDictionary *userInfo) {
+        if(error){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        else if(image){
+         
+            self->_originalImage = image;
+            self->_imageView.image = image;
+       
+            if(self.targetImageView==nil){
+                if([self.delegate respondsToSelector:@selector(imageEditor:didFinishEditingWithImage:)]){
+                    [self.delegate imageEditor:self didFinishEditingWithImage:_originalImage];
+                }
+                else if([self.delegate respondsToSelector:@selector(imageEditor:didFinishEdittingWithImage:)]){
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                    [self.delegate imageEditor:self didFinishEdittingWithImage:_originalImage];
+        #pragma clang diagnostic pop
+                }
+                else{
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
+            }
+            else{
+                _imageView.image = _originalImage;
+                [self restoreImageView:NO];
+            }
+            
+            
+        }
+    }];
+     
 }
 
 - (void)pushedCloseBtn:(id)sender
